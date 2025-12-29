@@ -1,0 +1,22 @@
+{
+  "name": "my-electron-app",
+  "version": "1.0.0",
+  "description": "一个学习electron的应用",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/montilloo/my-electron-app.git"
+  },
+  "keywords": [
+    "electron"
+  ],
+  "author": "nikun2008@126.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/montilloo/my-electron-app/issues"
+  },
+  "homepage": "https://github.com/montilloo/my-electron-app#readme"
+}
