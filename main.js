@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog, Menu } = require("electron");
+const { app, BrowserWindow, ipcMain, dialog, Menu, Notification } = require("electron");
 const path = require("node:path");
 
 function handleSetTitle (event, title) {
@@ -43,20 +43,31 @@ const createWindow = () => {
 	mainWindow.loadFile("index.html");
 
 	// Open the DevTools.
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 };
+const NOTIFICATION_TITLE = "Basic Notification";
+const NOTIFICATION_BODY = "Notification from the Main process";
 
-app.whenReady().then(() => {
-	ipcMain.on("set-title", handleSetTitle);
-	ipcMain.handle("dialog:openFile", handleFileOpen);
-	ipcMain.on("counter-value", (_event, value) => {
-		console.log(value); // will print value to Node console
-	});
-	createWindow();
-  app.on("activate", () => {
-		if (BrowserWindow.getAllWindows().length === 0) createWindow();
-	});
-});
+function showNotification() {
+	new Notification({
+		title: NOTIFICATION_TITLE,
+		body: NOTIFICATION_BODY,
+	}).show();
+}
+app
+	.whenReady()
+	.then(() => {
+		ipcMain.on("set-title", handleSetTitle);
+		ipcMain.handle("dialog:openFile", handleFileOpen);
+		ipcMain.on("counter-value", (_event, value) => {
+			console.log(value); // will print value to Node console
+		});
+		createWindow();
+		app.on("activate", () => {
+			if (BrowserWindow.getAllWindows().length === 0) createWindow();
+		});
+	})
+	.then(showNotification);
 
 app.on("window-all-closed", () => {
 	if (process.platform !== "darwin") {
